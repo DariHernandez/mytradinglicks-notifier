@@ -1,5 +1,7 @@
 import json, os, log, time, bs4, datetime, pytz, calendar, sys
 from web_scraping import Web_scraping
+from email_manager import Email_manager
+
 current_dir = os.path.dirname(__file__)
 current_file = os.path.basename(__file__)
 
@@ -13,9 +15,13 @@ with open (path_config, "r") as file_config:
     page_user = data_config["page_user"]
     page_pass = data_config["page_pass"]
     wait_time = data_config["wait_time"]
-    time_zone_name = data_config["time_zone_name"]
+    time_zone = data_config["time_zone"]
     day_start = str(data_config["day_start"]).lower()
-    day_end = str(data_config["day_end"]).lower()
+    day_end   = str(data_config["day_end"]).lower()
+    email     = data_config["email"]
+    password  = data_config["password"]
+    to_emails = data_config["to_emails"]
+    
     
     
 # Validate credentials (dates)
@@ -54,7 +60,11 @@ scraper.send_data("#swpm_password", page_pass)
 scraper.click('input[value="Login"]')
 time.sleep(2)
 
+# Connect to email
+email_sender = Email_manager (email, password)
+
 # Main loop for extract data
+last_percentage = 0
 while True: 
     
     # WAIT TIME
@@ -64,8 +74,8 @@ while True:
     # VALIDATE DATES
     
     # Get date time for specific time zone
-    time_zone = pytz.timezone(time_zone_name)
-    time_now = datetime.datetime.now(time_zone)
+    tz = pytz.timezone(time_zone)
+    time_now = datetime.datetime.now(tz)
     today = str(calendar.day_name[time_now.weekday()]).lower()
     
     # Convert dates to number
@@ -97,19 +107,40 @@ while True:
     frame = scraper.get_elem('#main').get_attribute('innerHTML')
     
     # Get NDM percentage
-    percentage_selector = '#container .grid-row.cells:nth-child(10) div:nth-child(4) .grid-text:nth-child(2) .text:only-child'
+    percentage_selector = '#container .grid-row.cells:nth-child(10) div:nth-child(4) .grid-text:nth-child(2) .text:only-child' 
     
     soup = bs4.BeautifulSoup(frame, "html.parser")
     percentage_elemn = soup.select(percentage_selector)
-    percentage = int(str(percentage_elemn[0].getText()).replace("%", ""))
+    percentage = int(str(percentage_elemn[0].getText()).replace("%", ""))  
     
+    # NOTIFICATIONS
     
-    
-    # DETECT CHANGES
-    
-        # Send email notification
+    # Detect all changes and send notifications
+    if last_percentage != percentage: 
+
+        # EMAIL NOTIFICATION
+
+        # Create email subject
+        if last_percentage < percentage: 
+            subject = f"Up {percentage - last_percentage}% - {percentage}%"
+        else: 
+            subject = f"Down {last_percentage - percentage}% - {percentage}%"
+                        
+        # Edit fubject for first email of the day
+        if last_percentage == 0:
+            subject += " (first run of the program)" 
+            
+        # Create email body
+        body = f"Last NDM percentage: {last_percentage}% \n"
+        body += f"Current NDM percentage: {percentage}% \n"
+        body += f"Difference: {percentage -last_percentage}%"           
         
+        # Send email
+        email_sender.send_email_text(to_emails, subject, body)
+
         # Send telegram notification 
     
-
-input ('End?')
+        # Specific changes for telegram menssage
+        
+    # UPDATE LAST PERCENTAGE
+    last_percentage = percentage
