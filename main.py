@@ -2,6 +2,7 @@ import json, os, log, time, bs4, datetime, pytz, calendar, sys
 from web_scraping import Web_scraping
 from email_manager import Email_manager
 from telegram_api import telegram_bot_sendtext
+from date_manager import verify_day_week, between_days, between_hours
 
 current_dir = os.path.dirname(__file__)
 current_file = os.path.basename(__file__)
@@ -27,32 +28,11 @@ with open (path_config, "r") as file_config:
     max_percentage = data_config["max_percentage"]
     min_percentage = data_config["min_percentage"]
     telegram_chats = data_config["telegram_chats"]
-    
-    
-    
-# Validate credentials (dates)
-days = {
-    "sunday"    : 0,
-    "monday"    : 1, 
-    "tuesday"   : 2,
-    "wednesday" : 3,
-    "thursday"  : 4,
-    "friday"    : 5,
-    "saturday"  : 6
-}
 
-message = "" 
 
-if day_start not in days.keys():
-    message = f"Incorrect day in config file: '{day_start}'"
-    
-if day_end not in days.keys(): 
-    message = f"Incorrect day in config file: '{day_end}'"
-    
-if message: 
-    log.error(message, current_file, print_text=True)
-    sys.exit()
-    
+# Validate credentials
+verify_day_week(day_start)   
+verify_day_week(day_end) 
 
 # Instance for webscraping
 scraper = Web_scraping(headless=True)
@@ -77,56 +57,10 @@ while True:
     time.sleep(wait_time)
 
     
-    # VALIDATE DATES
-    
-    # Get date time for specific time zone
-    tz = pytz.timezone(time_zone)
-    time_now = datetime.datetime.now(tz)
-    today = str(calendar.day_name[time_now.weekday()]).lower()
-    
-    # Convert dates to number
-    day_start_num = days[day_start]
-    day_end_num = days[day_end]
-    today_num = days[today]
-    
-    
-    # Validation of dates
-    message = ""
-    
-    if today_num < day_start_num: 
-        message = f"Current day '{today}' is before start day: '{day_start}'"
+    # VALIDATE DATES AND HOURS
+    between_days (day_start, day_end, time_zone)
+    between_hours (hour_start, hour_end, time_zone)
         
-    if today_num > day_end_num: 
-        message = f"Current day '{today}' is after end day: '{day_end}'"
-        
-    if message:
-        log.info(message, current_file, print_text=True)
-        sys.exit()       
-        
-    # Convert string hours to date time
-    hours = int(hour_start.split(":")[0])
-    minutes = int(hour_start.split(":")[1])
-    hour_start_formated = datetime.time(hour=hours, minute=minutes, second=0) 
-    
-    hours = int(hour_end.split(":")[0])
-    minutes = int(hour_end.split(":")[1])
-    hour_end_formated = datetime.time(hour=hours, minute=minutes, second=0) 
-    
-    hour_now =  datetime.time(hour=time_now.hour, minute=time_now.minute, second=time_now.second) 
-        
-    # Validation of hours
-    message = ""
-    if hour_now < hour_start_formated: 
-        message = f"Current time '{hour_now}' is before start time: '{hour_start_formated}'"
-        
-    if hour_now > hour_end_formated: 
-        message = f"Current time '{hour_now}' is after end time: '{hour_end_formated}'"
-        
-    if message:
-        log.info(message, current_file, print_text=True)
-        sys.exit()  
-   
-   
     # EXTRACT VALUE
     
     # Get correct frame 
@@ -156,7 +90,7 @@ while True:
         else: 
             subject = f"Down {last_percentage - percentage}% - {percentage}%"
                         
-        # Edit fubject for first email of the day
+        # Edit subject for first email of the day
         if last_percentage == 0:
             subject += " (first run of the program)" 
             
