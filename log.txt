@@ -233,3 +233,23 @@
 2021-05-13 21:07:20,914 — WDM — INFO — log:12 — Get LATEST driver version for 90.0.4430
 2021-05-13 21:07:21,081 — WDM — INFO — log:12 — Driver [/home/dari/.wdm/drivers/chromedriver/linux64/90.0.4430.24/chromedriver] found in cache
 2021-05-13 21:07:22,681 — root — INFO — info:23 — Module:  - message: Login to page...
+2021-05-13 21:16:00,964 — WDM — INFO — log:22 — ====== WebDriver manager ======
+2021-05-13 21:16:01,044 — WDM — INFO — log:12 — Current google-chrome version is 90.0.4430
+2021-05-13 21:16:01,044 — WDM — INFO — log:12 — Get LATEST driver version for 90.0.4430
+2021-05-13 21:16:01,205 — WDM — INFO — log:12 — Driver [/home/dari/.wdm/drivers/chromedriver/linux64/90.0.4430.24/chromedriver] found in cache
+2021-05-13 21:16:02,837 — root — INFO — info:23 — Module:  - message: Login to page...
+2021-05-13 21:17:22,065 — WDM — INFO — log:22 — ====== WebDriver manager ======
+2021-05-13 21:17:22,133 — WDM — INFO — log:12 — Current google-chrome version is 90.0.4430
+2021-05-13 21:17:22,134 — WDM — INFO — log:12 — Get LATEST driver version for 90.0.4430
+2021-05-13 21:17:22,255 — WDM — INFO — log:12 — Driver [/home/dari/.wdm/drivers/chromedriver/linux64/90.0.4430.24/chromedriver] found in cache
+2021-05-13 21:17:23,834 — root — INFO — info:23 — Module:  - message: Login to page...
+2021-05-13 21:20:41,885 — WDM — INFO — log:22 — ====== WebDriver manager ======
+2021-05-13 21:20:42,057 — WDM — INFO — log:12 — Current google-chrome version is 90.0.4430
+2021-05-13 21:20:42,057 — WDM — INFO — log:12 — Get LATEST driver version for 90.0.4430
+2021-05-13 21:20:42,179 — WDM — INFO — log:12 — Driver [/home/dari/.wdm/drivers/chromedriver/linux64/90.0.4430.24/chromedriver] found in cache
+2021-05-13 21:20:44,167 — root — INFO — info:23 — Module:  - message: Login to page...
+2021-05-13 21:23:08,478 — WDM — INFO — log:22 — ====== WebDriver manager ======
+2021-05-13 21:23:08,612 — WDM — INFO — log:12 — Current google-chrome version is 90.0.4430
+2021-05-13 21:23:08,612 — WDM — INFO — log:12 — Get LATEST driver version for 90.0.4430
+2021-05-13 21:23:08,775 — WDM — INFO — log:12 — Driver [/home/dari/.wdm/drivers/chromedriver/linux64/90.0.4430.24/chromedriver] found in cache
+2021-05-13 21:23:10,811 — root — INFO — info:23 — Module:  - message: Login to page...

@@ -9,6 +9,7 @@ with open (path_config, "r") as file_config:
     data_config = json.loads(file_config.read())
     page_user = data_config["page_user"]
     page_pass = data_config["page_pass"]
+    wait_time = data_config["wait_time"]
 
 # Instance for webscraping
 scraper = Web_scraping(headless=False)
@@ -26,9 +27,10 @@ time.sleep(2)
 while True: 
     
     # WAIT TIME
+    time.sleep(wait_time)
+
     
-    
-    # VALID DATES
+    # VALIDATE DATES
     
     
     # EXTRACT VALUE
@@ -44,9 +46,8 @@ while True:
     
     soup = bs4.BeautifulSoup(frame, "html.parser")
     percentage_elemn = soup.select(percentage_selector)
-    percentage = percentage_elemn[0].getText()
+    percentage = int(str(percentage_elemn[0].getText()).replace("%", ""))
     
-    print (percentage)
     
     
     # DETECT CHANGES
