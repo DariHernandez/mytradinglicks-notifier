@@ -1,6 +1,7 @@
 import json, os, log, time, bs4, datetime, pytz, calendar, sys
 from web_scraping import Web_scraping
 from email_manager import Email_manager
+from telegram_api import telegram_bot_sendtext
 
 current_dir = os.path.dirname(__file__)
 current_file = os.path.basename(__file__)
@@ -16,8 +17,8 @@ with open (path_config, "r") as file_config:
     page_pass      = data_config["page_pass"]
     wait_time      = data_config["wait_time"]
     time_zone      = data_config["time_zone"]
-    day_start      = str(data_config["day_start"]).lower()
-    day_end        = str(data_config["day_end"]).lower()
+    day_start      = data_config["day_start"].lower()
+    day_end        = data_config["day_end"].lower()
     hour_start     = data_config["hour_start"]
     hour_end       = data_config["hour_end"]
     email          = data_config["email"]
@@ -25,6 +26,7 @@ with open (path_config, "r") as file_config:
     to_emails      = data_config["to_emails"]
     max_percentage = data_config["max_percentage"]
     min_percentage = data_config["min_percentage"]
+    telegram_chats = data_config["telegram_chats"]
     
     
     
@@ -53,7 +55,7 @@ if message:
     
 
 # Instance for webscraping
-scraper = Web_scraping(headless=False)
+scraper = Web_scraping(headless=True)
 
 # Login with credentials
 log.info("Login to page...", print_text=True)
@@ -111,9 +113,7 @@ while True:
     hour_end_formated = datetime.time(hour=hours, minute=minutes, second=0) 
     
     hour_now =  datetime.time(hour=time_now.hour, minute=time_now.minute, second=time_now.second) 
-    
-    print (hour_start_formated, hour_end_formated, hour_now)
-    
+        
     # Validation of hours
     message = ""
     if hour_now < hour_start_formated: 
@@ -147,6 +147,7 @@ while True:
     # Detect all changes and send notifications
     if last_percentage != percentage: 
 
+
         # FIRST NOTIFICATION
 
         # Create email subject
@@ -168,18 +169,15 @@ while True:
         email_sender.send_email_text(to_emails, subject, body)
 
 
-        # # SECOND NOTIFICATION
-        
-        # # Create email subject and menssage text
-        # menssage_text = subject
-        # subject = subject.replace("-", "/")
-        
-        # # Send telegram
-        # email_sender.send_email_text(to_emails, subject, body)
-
-        # # Send telegram notification 
+        # SECOND NOTIFICATION
+        if percentage > max_percentage or percentage < min_percentage:
     
-        
-        
+            # Create email subject and menssage text
+            menssage_text = subject.replace(" (first run of the program)", "")
+            
+            # Send telegram notification 
+            telegram_bot_sendtext(menssage_text, telegram_chats)
+    
+    
     # UPDATE LAST PERCENTAGE
     last_percentage = percentage
