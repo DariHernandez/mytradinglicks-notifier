@@ -3,7 +3,7 @@ import requests, log, os, json
 current_dir = os.path.dirname(__file__)
 current_file = os.path.basename(__file__)
 
-def telegram_bot_sendtext(bot_message, chat_ids):
+def telegram_bot_sendtext(bot_token, bot_message, chat_ids):
     """
     Use bot for send enssage to specific chat
     """
@@ -12,7 +12,6 @@ def telegram_bot_sendtext(bot_message, chat_ids):
     responses = []
 
     for chat_id in chat_ids:
-        bot_token = '1853683882:AAH_4aToI5HY8DNwC4M0nCQmyuTnKmKjoLc'
         bot_chatID = chat_id
         send_text = 'https://api.telegram.org/bot' + bot_token + '/sendMessage?chat_id=' + bot_chatID + '&parse_mode=Markdown&text=' + bot_message
         

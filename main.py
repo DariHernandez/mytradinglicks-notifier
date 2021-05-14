@@ -28,6 +28,7 @@ with open (path_config, "r") as file_config:
     max_percentage = data_config["max_percentage"]
     min_percentage = data_config["min_percentage"]
     telegram_chats = data_config["telegram_chats"]
+    bot_token      = data_config["bot_token"]
 
     menssage = str(data_config)
     log.info(menssage, current_file)
@@ -120,7 +121,7 @@ while True:
             menssage_text = subject.replace(" (first run of the program)", "")
             
             # Send telegram notification 
-            telegram_bot_sendtext(menssage_text, telegram_chats)
+            telegram_bot_sendtext(bot_token, menssage_text, telegram_chats)
     
     
     # UPDATE LAST PERCENTAGE
