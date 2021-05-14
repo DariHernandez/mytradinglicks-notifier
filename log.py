@@ -3,7 +3,7 @@
 import logging, os, sys
 
 # Login file path
-file_log = os.path.join (os.path.dirname (__file__), "log.txt")
+file_log = os.path.join (os.path.dirname (__file__), ".log")
 format_log = "%(asctime)s — %(name)s — %(levelname)s — %(funcName)s:%(lineno)d — %(message)s"
 logging.basicConfig(filename=file_log, level=logging.DEBUG, format=format_log)
 
