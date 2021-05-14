@@ -13,12 +13,12 @@ class Web_scraping ():
     Class to manage and configure web browser
     """
     
-    def __init__ (self, web_page, headless, user_agent): 
+    def __init__ (self, web_page="", headless=True, user_agent=False): 
         """
         Constructor of the class
         """
         
-        self.basetime = 2
+        self.basetime = 1
 
         # variables of class 
         self.__headless = headless
@@ -81,7 +81,7 @@ class Web_scraping ():
                 ).install(), options=options, service_log_path=None)
         
         # Clean terminal
-        self.clean_terminal()
+        os.system('cls||clear')
         
         if self.__web_page: 
             self.driver.get (self.__web_page)
@@ -190,7 +190,8 @@ class Web_scraping ():
         try: 
             elem = self.driver.find_element_by_css_selector (selector)
             return elem.text
-        except: 
+        except Exception as err: 
+            print (err)
             return None
         
     
@@ -201,7 +202,7 @@ class Web_scraping ():
         
         texts = []
         
-        elems = self.__browser.find_elements_by_css_selector (selector)
+        elems = self.driver.find_elements_by_css_selector (selector)
         
         for elem in elems:         
             try: 
@@ -231,7 +232,7 @@ class Web_scraping ():
         """
         
         attributes = []
-        elems = self.__browser.find_elements_by_css_selector (selector)
+        elems = self.driver.find_elements_by_css_selector (selector)
 
         for elem in elems:
 
@@ -347,13 +348,12 @@ class Web_scraping ():
         self.driver.switch_to_default_content()
     
     
-    def switch_to_frame (self, frame_selector): 
+    def switch_to_frame (self, frame_id): 
         """
         Switch to iframe inside the main content
         """
 
-        self.switch_to_main_frame()
-        self.driver.switch_to_frame(frame_selector)
+        self.driver.switch_to_frame(frame_id)
 
     
     def open_tab (self): 
@@ -402,7 +402,7 @@ class Web_scraping ():
     
     def save_page(self, file_html): 
         """ Save current page in local file"""
-        page_html = self.__browser.page_source
+        page_html = self.driver.page_source
         current_folder = os.path.dirname (__file__)
         page_file = open(os.path.join (current_folder, file_html), "w")
         page_file.write(page_html)
