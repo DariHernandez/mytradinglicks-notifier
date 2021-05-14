@@ -78,7 +78,6 @@ class Email_manager ():
         self.smtpObj.starttls()
 
         # login
-        print (self.email, self.password)
         self.smtpObj.login (self.email, self.password)
     
     def send_email_text (self, receivers=[], subject="", body=""): 

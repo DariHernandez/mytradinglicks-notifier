@@ -11,16 +11,20 @@ path_config = os.path.join(current_dir, "config.json")
 with open (path_config, "r") as file_config: 
     
     # Get settings
-    data_config = json.loads(file_config.read())
-    page_user = data_config["page_user"]
-    page_pass = data_config["page_pass"]
-    wait_time = data_config["wait_time"]
-    time_zone = data_config["time_zone"]
-    day_start = str(data_config["day_start"]).lower()
-    day_end   = str(data_config["day_end"]).lower()
-    email     = data_config["email"]
-    password  = data_config["password"]
-    to_emails = data_config["to_emails"]
+    data_config    = json.loads(file_config.read())
+    page_user      = data_config["page_user"]
+    page_pass      = data_config["page_pass"]
+    wait_time      = data_config["wait_time"]
+    time_zone      = data_config["time_zone"]
+    day_start      = str(data_config["day_start"]).lower()
+    day_end        = str(data_config["day_end"]).lower()
+    hour_start     = data_config["hour_start"]
+    hour_end       = data_config["hour_end"]
+    email          = data_config["email"]
+    password       = data_config["password"]
+    to_emails      = data_config["to_emails"]
+    max_percentage = data_config["max_percentage"]
+    min_percentage = data_config["min_percentage"]
     
     
     
@@ -84,20 +88,45 @@ while True:
     today_num = days[today]
     
     
-    # Validation of dates: before and after
+    # Validation of dates
     message = ""
     
     if today_num < day_start_num: 
-        message = f"Current day '{today}' before start day: '{day_start}'"
+        message = f"Current day '{today}' is before start day: '{day_start}'"
         
     if today_num > day_end_num: 
-        message = f"Current day '{today}' after end day: '{day_end}'"
+        message = f"Current day '{today}' is after end day: '{day_end}'"
         
     if message:
         log.info(message, current_file, print_text=True)
         sys.exit()       
+        
+    # Convert string hours to date time
+    hours = int(hour_start.split(":")[0])
+    minutes = int(hour_start.split(":")[1])
+    hour_start_formated = datetime.time(hour=hours, minute=minutes, second=0) 
     
+    hours = int(hour_end.split(":")[0])
+    minutes = int(hour_end.split(":")[1])
+    hour_end_formated = datetime.time(hour=hours, minute=minutes, second=0) 
     
+    hour_now =  datetime.time(hour=time_now.hour, minute=time_now.minute, second=time_now.second) 
+    
+    print (hour_start_formated, hour_end_formated, hour_now)
+    
+    # Validation of hours
+    message = ""
+    if hour_now < hour_start_formated: 
+        message = f"Current time '{hour_now}' is before start time: '{hour_start_formated}'"
+        
+    if hour_now > hour_end_formated: 
+        message = f"Current time '{hour_now}' is after end time: '{hour_end_formated}'"
+        
+    if message:
+        log.info(message, current_file, print_text=True)
+        sys.exit()  
+   
+   
     # EXTRACT VALUE
     
     # Get correct frame 
@@ -118,7 +147,7 @@ while True:
     # Detect all changes and send notifications
     if last_percentage != percentage: 
 
-        # EMAIL NOTIFICATION
+        # FIRST NOTIFICATION
 
         # Create email subject
         if last_percentage < percentage: 
@@ -138,9 +167,19 @@ while True:
         # Send email
         email_sender.send_email_text(to_emails, subject, body)
 
-        # Send telegram notification 
+
+        # # SECOND NOTIFICATION
+        
+        # # Create email subject and menssage text
+        # menssage_text = subject
+        # subject = subject.replace("-", "/")
+        
+        # # Send telegram
+        # email_sender.send_email_text(to_emails, subject, body)
+
+        # # Send telegram notification 
     
-        # Specific changes for telegram menssage
+        
         
     # UPDATE LAST PERCENTAGE
     last_percentage = percentage
