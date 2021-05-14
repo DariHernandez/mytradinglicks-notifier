@@ -1,5 +1,5 @@
 # [PROJECT NAME]
-**python version: 3.8**
+**python version: 3.9**
 
 [description]
 

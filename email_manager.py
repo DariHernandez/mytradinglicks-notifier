@@ -1,8 +1,11 @@
-import smtplib, os, json
-from email.mime.application import MIMEApplication
-from email.mime.multipart import MIMEMultipart
-from email.mime.text import MIMEText
-from email.utils import formatdate
+import smtplib, log, os
+# from email.mime.application import MIMEApplication
+# from email.mime.multipart import MIMEMultipart
+# from email.mime.text import MIMEText
+# from email.utils import formatdate
+
+current_dir = os.path.dirname(__file__)
+current_file = os.path.basename(__file__)
 
 class Email_manager (): 
     """Manage emails: connect and send mails
@@ -68,6 +71,9 @@ class Email_manager ():
         """Connect to smtp server for the email
         """
         
+        message = "Connecting to smtp..."
+        log.info(message, current_file)
+        
         # Connect to server and port
         self.smtpObj = smtplib.SMTP (self.smtp_server, self.smtp_port)
 
@@ -79,6 +85,9 @@ class Email_manager ():
 
         # login
         self.smtpObj.login (self.email, self.password)
+        
+        message = "Connected to smtp"
+        log.info(message, current_file)
     
     def send_email_text (self, receivers=[], subject="", body=""): 
         """Send email to specific receivers
@@ -92,6 +101,9 @@ class Email_manager ():
         # Send emails
         for receiver in receivers: 
             self.smtpObj.sendmail(self.email, receiver, menssage)
+            
+            message = f"Sending email to: {receiver}, menssage: {menssage}"
+            log.info(message, current_file)
             
         self.smtpObj.close()
             

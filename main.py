@@ -1,4 +1,4 @@
-import json, os, log, time, bs4, datetime, pytz, calendar, sys
+import json, os, log, time, bs4
 from web_scraping import Web_scraping
 from email_manager import Email_manager
 from telegram_api import telegram_bot_sendtext
@@ -29,6 +29,8 @@ with open (path_config, "r") as file_config:
     min_percentage = data_config["min_percentage"]
     telegram_chats = data_config["telegram_chats"]
 
+    menssage = str(data_config)
+    log.info(menssage, current_file)
 
 # Validate credentials
 verify_day_week(day_start)   
@@ -38,12 +40,13 @@ verify_day_week(day_end)
 scraper = Web_scraping(headless=True)
 
 # Login with credentials
-log.info("Login to page...", print_text=True)
+log.info("Login to page...", current_file, print_text=True)
 page_login = "https://www.mytradinglicks.com/membership-login/"
 scraper.set_page(page_login)
 scraper.send_data("#swpm_user_name", page_user)
 scraper.send_data("#swpm_password", page_pass)
 scraper.click('input[value="Login"]')
+log.info("Loged", current_file)
 time.sleep(2)
 
 # Connect to email
@@ -55,6 +58,7 @@ while True:
     
     # WAIT TIME
     time.sleep(wait_time)
+    print ('')
 
     
     # VALIDATE DATES AND HOURS
@@ -64,12 +68,14 @@ while True:
     # EXTRACT VALUE
     
     # Get correct frame 
+    log.info('Getting frame...', current_file)
     scraper.refresh_selenium(time_units=0.1)
     scraper.switch_to_frame('ipp_page___fCp2pxfSwTVScBqqDcbrFm_responsive')
     scraper.switch_to_frame('iframe')
     frame = scraper.get_elem('#main').get_attribute('innerHTML')
     
     # Get NDM percentage
+    log.info('Getting percentage...', current_file, print_text=True)
     percentage_selector = '#container .grid-row.cells:nth-child(10) div:nth-child(4) .grid-text:nth-child(2) .text:only-child' 
     
     soup = bs4.BeautifulSoup(frame, "html.parser")
@@ -81,8 +87,10 @@ while True:
     # Detect all changes and send notifications
     if last_percentage != percentage: 
 
+        log.info(f'last_percentage: {last_percentage}, percentage: {percentage}', current_file, print_text=True)
 
         # FIRST NOTIFICATION
+        log.info('Sending first notification...', current_file, print_text=True)
 
         # Create email subject
         if last_percentage < percentage: 
@@ -104,6 +112,8 @@ while True:
 
 
         # SECOND NOTIFICATION
+        log.info('Sending second notification...', current_file, print_text=True)
+        
         if percentage > max_percentage or percentage < min_percentage:
     
             # Create email subject and menssage text
