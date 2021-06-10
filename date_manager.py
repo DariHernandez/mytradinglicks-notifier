@@ -1,4 +1,4 @@
-import sys, os, log, pytz, datetime, calendar
+import sys, os, log, pytz, datetime, calendar, time
 
 current_dir = os.path.dirname(__file__)
 current_file = os.path.basename(__file__)
@@ -84,17 +84,23 @@ def between_days (day_start, day_end, time_zone=""):
     today_num = days[today]
     
     
-    # Validation of dates
-    message = ""
-    
-    if today_num < day_start_num: 
-        message = f"Current day '{today}' is before start day: '{day_start}'"
+    # Validation of dates and time wait
+    while True:
         
-    if today_num > day_end_num: 
-        message = f"Current day '{today}' is after end day: '{day_end}'"
+        message = ""
         
+        if today_num < day_start_num: 
+            message = f"Current day '{today}' is before start day: '{day_start}'"
+            print (message)
+            time.sleep(1)
+            
+        elif today_num > day_end_num: 
+            message = f"Current day '{today}' is after end day: '{day_end}'"
+            print (message)
+            time.sleep(1)
+        else: 
+            break
         
-    print_status(message, type="info") 
 
 def between_hours (hour_start, hour_end, time_zone=""): 
     """Validate if current hour is between specific range of hours
@@ -118,14 +124,20 @@ def between_hours (hour_start, hour_end, time_zone=""):
     
     hour_now =  datetime.time(hour=time_now.hour, minute=time_now.minute, second=time_now.second) 
         
-    # Validation of hours
-    message = ""
-    
-    if hour_now < hour_start_formated: 
-        message = f"Current time '{hour_now}' is before start time: '{hour_start_formated}'"
+    # Validation of dates and time wait
+    while True:
+        message = ""
         
-    if hour_now > hour_end_formated: 
-        message = f"Current time '{hour_now}' is after end time: '{hour_end_formated}'"
+        if hour_now < hour_start_formated: 
+            message = f"Current time '{hour_now}' is before start time: '{hour_start_formated}'"
+            print (message)
+            time.sleep(1)
             
-    print_status(message, type="info")
-   
+        elif hour_now > hour_end_formated: 
+            message = f"Current time '{hour_now}' is after end time: '{hour_end_formated}'"
+            print (message)
+            time.sleep(1)
+        else: 
+            break
+                
+    
