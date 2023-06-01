@@ -41,185 +41,185 @@ Project type: **client's project**
 
 # Install
 
-## Modules\r
-\r
-Install the next modules from pip, to use the project:\r
-\r
-* pytz\r
-* bs4\r
-* requests\r
-* selenium\r
-* webdriver-manager\r
-* fake-useragent\r
-\r
-## Programs\r
-\r
-Install the next programs, to use the project:\r
-\r
+## Modules
+
+Install the next modules from pip, to use the project:
+
+* pytz
+* bs4
+* requests
+* selenium
+* webdriver-manager
+* fake-useragent
+
+## Programs
+
+Install the next programs, to use the project:
+
 * google chrome
 
 # Settings
 
-The config.json file have the basic configurations of the project. Update it with your information / preferences\r
-\r
-## config.json structure\r
-\\`\\`\\`json\r
-{\r
-    \\\"page_user\\\": \\\"your_user\\\", \r
-    \\\"page_pass\\\": \\\"your_password\\\",\r
-    \\\"wait_time\\\": 1,\r
-    \\\"time_zone\\\": \\\"Europe/Dublin\\\",\r
-    \\\"day_start\\\": \\\"monday\\\",\r
-    \\\"day_end\\\": \\\"friday\\\",\r
-    \\\"hour_start\\\": \\\"14:30\\\",\r
-    \\\"hour_end\\\": \\\"21:00\\\",\r
-    \\\"email\\\": \\\"your_email@yahoo.com\\\",\r
-    \\\"password\\\": \\\"your password\\\",\r
-    \\\"to_emails\\\": [\\\"email1\\\", \\\"email2\\\"],\r
-    \\\"max_percentage\\\": 59,\r
-    \\\"min_percentage\\\": 53,\r
-    \\\"telegram_chats\\\": [\\\"1812619688\\\", \\\"1207825117\\\", \\\"1308170953\\\"], \r
-    \\\"bot_token\\\": \\\"1853683882:AAH_XXXXXXXXXXXXXXXXXXXXXXXXXX\\\"\r
-}\r
-\\`\\`\\`\r
-\r
-### page_user\r
-*(Type: String)*\r
-\r
-**User name** for make **login** in project page.\r
-\r
-### page_pass\r
-*(Type: String)*\r
-\r
-**User password** for make **login** in project page.\r
-\r
-### wait_time\r
-*(Type: Integer)*\r
-\r
-**Waiting time in seconds** between each update, to **detect changes** on the page\r
-\r
-### time_zone\r
-*(Type: String)*\r
-\r
-**Time zone text**, for manage **dates and times**. \r
-\r
-Sample: Europe/Dublin\r
-\r
-\r
-### day_start\r
-*(Type: String)*\r
-\r
-**Day** of the week the **program** will **start**.\r
-\r
-Possible values: **sunday, monday, tuesday, wednesday, thursday, friday, saturday**\r
-\r
-Note: the **week starts on Sunday**.\r
-\r
-\r
-### day_end\r
-*(Type: String)*\r
-\r
-**Day** of the week the **program** will **end**.\r
-\r
-Possible values: **sunday, monday, tuesday, wednesday, thursday, friday, saturday**\r
-\r
-Must be **any day after day_start**.\r
-\r
-Note: the **week starts on Sunday**. \r
-\r
-\r
-### hour_start\r
-*(Type: String)*\r
-\r
-**Time** the program **will start**.\r
-\r
-Format: **hh:mm**\r
-\r
-\r
-### hour_end\r
-*(Type: String)*\r
-\r
-**Time** the program **will start**.\r
-\r
-Format: **hh:mm**\r
-\r
-It must be **any time after hour_start**.\r
-\r
-\r
-### email\r
-*(Type: String)*\r
-\r
-**Email** that will **send** the **notification** emails.\r
-\r
-Supported mail services:\r
-* **gmail.com**\r
-* **outlook.com**\r
-* **hotmail.com**\r
-* **live.com**\r
-* **yahoo.com**\r
-* **aol.com**\r
-\r
-Note: **some mail services require additional steps to log in**. If you have problems connecting your email with the project, **contact me**.\r
-\r
-\r
-### password\r
-*(Type: String)*\r
-\r
-**Password** from email that will **send** the **notification** emails.\r
-\r
-\r
-### to_emails\r
-*(Type: List of strings)*\r
-\r
-**List of emails** that **will receive notifications**.\r
-\r
-\r
-### max_percentage\r
-*(Type: Integer)*\r
-\r
-Reference percentage.\r
-When the **value extracted** from the page is **greater than max_percentage**, the **second notification will be sent** (message by telegram)\r
-\r
-Value **between 0 and 100**\r
-\r
-\r
-### min_percentage\r
-*(Type: Integer)*\r
-\r
-Reference percentage.\r
-When the **value extracted** from the page is **less than min_percentage**, the **second notification will be sent** (message by telegram)\r
-\r
-Value **between 0 and 100**\r
-\r
-\r
-### telegram_chats\r
-*(Type: list of strings)*\r
-\r
-List of **chat ids** (users), which **will receive notifications** in telegram.\r
-\r
-Note: **Do not touch.**\r
-\r
-\r
-### bot_token\r
-*(Type: string)*\r
-\r
-**Key** to connect to **telegram preconfigured bot**.\r
-\r
+The config.json file have the basic configurations of the project. Update it with your information / preferences
+
+## config.json structure
+```json
+{
+    "page_user": "your_user", 
+    "page_pass": "your_password",
+    "wait_time": 1,
+    "time_zone": "Europe/Dublin",
+    "day_start": "monday",
+    "day_end": "friday",
+    "hour_start": "14:30",
+    "hour_end": "21:00",
+    "email": "your_email@yahoo.com",
+    "password": "your password",
+    "to_emails": ["email1", "email2"],
+    "max_percentage": 59,
+    "min_percentage": 53,
+    "telegram_chats": ["1812619688", "1207825117", "1308170953"], 
+    "bot_token": "1853683882:AAH_XXXXXXXXXXXXXXXXXXXXXXXXXX"
+}
+```
+
+### page_user
+*(Type: String)*
+
+**User name** for make **login** in project page.
+
+### page_pass
+*(Type: String)*
+
+**User password** for make **login** in project page.
+
+### wait_time
+*(Type: Integer)*
+
+**Waiting time in seconds** between each update, to **detect changes** on the page
+
+### time_zone
+*(Type: String)*
+
+**Time zone text**, for manage **dates and times**. 
+
+Sample: Europe/Dublin
+
+
+### day_start
+*(Type: String)*
+
+**Day** of the week the **program** will **start**.
+
+Possible values: **sunday, monday, tuesday, wednesday, thursday, friday, saturday**
+
+Note: the **week starts on Sunday**.
+
+
+### day_end
+*(Type: String)*
+
+**Day** of the week the **program** will **end**.
+
+Possible values: **sunday, monday, tuesday, wednesday, thursday, friday, saturday**
+
+Must be **any day after day_start**.
+
+Note: the **week starts on Sunday**. 
+
+
+### hour_start
+*(Type: String)*
+
+**Time** the program **will start**.
+
+Format: **hh:mm**
+
+
+### hour_end
+*(Type: String)*
+
+**Time** the program **will start**.
+
+Format: **hh:mm**
+
+It must be **any time after hour_start**.
+
+
+### email
+*(Type: String)*
+
+**Email** that will **send** the **notification** emails.
+
+Supported mail services:
+* **gmail.com**
+* **outlook.com**
+* **hotmail.com**
+* **live.com**
+* **yahoo.com**
+* **aol.com**
+
+Note: **some mail services require additional steps to log in**. If you have problems connecting your email with the project, **contact me**.
+
+
+### password
+*(Type: String)*
+
+**Password** from email that will **send** the **notification** emails.
+
+
+### to_emails
+*(Type: List of strings)*
+
+**List of emails** that **will receive notifications**.
+
+
+### max_percentage
+*(Type: Integer)*
+
+Reference percentage.
+When the **value extracted** from the page is **greater than max_percentage**, the **second notification will be sent** (message by telegram)
+
+Value **between 0 and 100**
+
+
+### min_percentage
+*(Type: Integer)*
+
+Reference percentage.
+When the **value extracted** from the page is **less than min_percentage**, the **second notification will be sent** (message by telegram)
+
+Value **between 0 and 100**
+
+
+### telegram_chats
+*(Type: list of strings)*
+
+List of **chat ids** (users), which **will receive notifications** in telegram.
+
+Note: **Do not touch.**
+
+
+### bot_token
+*(Type: string)*
+
+**Key** to connect to **telegram preconfigured bot**.
+
 Note: **Do not touch.**
 
 # Run
 
-Run the \\`main.py\\` file with your python interpreter\r
-\r
-\\`\\`\\`python\r
-python main.py\r
-\\`\\`\\`
+Run the `main.py` file with your python interpreter
+
+```python
+python main.py
+```
 
 # Roadmap
 
-* [X] Load page and login with selenium\r
-* [X] Submit telegram messages\r
-* [X] Submit emails\r
+* [X] Load page and login with selenium
+* [X] Submit telegram messages
+* [X] Submit emails
 * [X] Validate start and end times
 
 
